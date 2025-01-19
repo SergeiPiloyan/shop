@@ -1,8 +1,9 @@
 import Router from "express";
+import { BrandControllers } from "../controllers/brandControllers";
 
 const router = Router();
 
-router.post("/");
-router.get("/");
+router.post("/", BrandControllers.create);
+router.get("/", BrandControllers.getAll);
 
 export default router;
