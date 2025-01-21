@@ -15,7 +15,7 @@ export class UserControllers {
     const { id } = req.query;
 
     if (!id) {
-      return next(ApiError.handleError(ErrorCode.NOT_FOUND));
+      return next(ApiError.handleError(ErrorCode.BAD_REQUEST));
     }
 
     res.json(id);
