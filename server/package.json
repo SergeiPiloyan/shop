@@ -18,11 +18,13 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "@types/express-fileupload": "^1.5.1",
     "@types/sequelize": "^4.28.20",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "esm": "^3.2.25",
     "express": "^4.21.2",
+    "express-fileupload": "^1.5.1",
     "nodemon": "^3.1.9",
     "pg": "^8.13.1",
     "pg-hstore": "^2.3.4",
