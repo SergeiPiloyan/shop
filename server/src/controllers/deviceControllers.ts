@@ -53,7 +53,24 @@ export class DeviceControllers {
     }
   }
 
-  public static async getAll(req: Request, res: Response) {}
+  public static async getAll(req: Request, res: Response) {
+    const { brandId, typeId, limit = 9, page = 1 } = req.query;
+
+    const offset = Number(page) * Number(limit) - Number(limit);
+
+    const where = {
+      ...(brandId && { brandId }),
+      ...(typeId && { typeId }),
+    };
+
+    const devices = await Device.findAndCountAll({
+      where,
+      limit: Number(limit),
+      offset,
+    });
+
+    res.json(devices);
+  }
 
   public static async getOne(req: Request, res: Response) {}
 }
