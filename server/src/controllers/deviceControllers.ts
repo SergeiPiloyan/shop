@@ -72,5 +72,14 @@ export class DeviceControllers {
     res.json(devices);
   }
 
-  public static async getOne(req: Request, res: Response) {}
+  public static async getOne(req: Request, res: Response) {
+    const { id } = req.params;
+
+    const device = await Device.findOne({
+      where: { id },
+      include: [{ model: DeviceInfo, as: "info" }],
+    });
+
+    res.json(device);
+  }
 }
