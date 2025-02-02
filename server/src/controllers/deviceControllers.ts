@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { UploadedFile } from "express-fileupload";
 import { v4 } from "uuid";
 import path from "path";
-import { Device } from "../models/models";
+import { Device, DeviceInfo } from "../models/models";
 import { ApiError } from "../error/ApiError";
 import { ErrorCode } from "../enums/ErrorCodes";
 
@@ -26,13 +26,26 @@ export class DeviceControllers {
         img.mv(path.resolve(__dirname, "..", "static", fileName));
       }
 
-      const device = await Device.create({
+      const device = await Device.create<any>({
         name,
         price,
         brandId,
         typeId,
         img: fileName,
       });
+
+      if (info) {
+        const parsedInfo: { title: string; description: string }[] =
+          JSON.parse(info);
+
+        parsedInfo.forEach((i) => {
+          Device.create({
+            title: i.title,
+            description: i.description,
+            deviceId: device.id,
+          });
+        });
+      }
 
       res.json(device);
     } catch (error) {
