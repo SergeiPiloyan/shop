@@ -42,6 +42,23 @@ export class UserControllers {
     res.json({ token });
   }
 
+  public static async login(req: Request, res: Response, next: NextFunction) {
+    const { email, password } = req.body;
+
+    const user: any = await User.findOne({ where: { email } });
+    if (!user) {
+      return next(ApiError.handleError(ErrorCode.WRONG_CREDENTIALS));
+    }
+
+    const comparedPassword = bcrypt.compareSync(password, user.password);
+    if (!comparedPassword) {
+      return next(ApiError.handleError(ErrorCode.WRONG_CREDENTIALS));
+    }
+
+    const token = generateJwtToken(user.id, user.email, user.role);
+    res.json({ token });
+  }
+
   public static async checkAuth(
     req: Request,
     res: Response,
