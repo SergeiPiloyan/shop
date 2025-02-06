@@ -60,17 +60,10 @@ export class UserControllers {
     res.json({ token });
   }
 
-  public static async checkAuth(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) {
-    const { id } = req.query;
-
-    if (!id) {
-      return next(ApiError.handleError(ErrorCode.BAD_REQUEST));
-    }
-
-    res.json(id);
+  public static async checkAuth(req: Request, res: Response) {
+    const user: { id: number; email: string; role: "USER" | "ADMIN" } =
+      req.body.user;
+    const token = generateJwtToken(user.id, user.email, user.role);
+    res.json({ token });
   }
 }
