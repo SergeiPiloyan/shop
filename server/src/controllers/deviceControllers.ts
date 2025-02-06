@@ -49,7 +49,7 @@ export class DeviceControllers {
 
       res.json(device);
     } catch (error) {
-      next(ApiError.handleError(ErrorCode.BAD_REQUEST));
+      return next(ApiError.handleError(ErrorCode.BAD_REQUEST));
     }
   }
 

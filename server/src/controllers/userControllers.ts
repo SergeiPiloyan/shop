@@ -19,7 +19,7 @@ export class UserControllers {
   ) {
     const { email, password, role } = req.body;
     if (!email || !password) {
-      next(ApiError.handleError(ErrorCode.ACCESS_DENIED));
+      return next(ApiError.handleError(ErrorCode.ACCESS_DENIED));
     }
 
     const candidate = await User.findOne({ where: { email } });
@@ -35,7 +35,8 @@ export class UserControllers {
       role,
       password: hashPassword,
     });
-    const basket = await Basket.create({ userId: user.id });
+
+    await Basket.create({ userId: user.id });
 
     const token = generateJwtToken(user.id, user.email, user.role);
 
