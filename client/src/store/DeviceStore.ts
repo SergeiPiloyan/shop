@@ -104,10 +104,10 @@ export default class DeviceStore {
   }
 
   get brands() {
-    return this._devices;
+    return this._brands;
   }
 
   get types() {
-    return this._devices;
+    return this._types;
   }
 }
